@@ -9,7 +9,7 @@
 Τέλος, θα συνεχίσει να κινείται ευθεία, μέχρι να διανύσει συνολικά (από την αρχή δηλαδή της λειτουργίας του) 150 εκατοστά. */
 #include <Smartcar.h>
 
-Odometer encoderLeft(180), encoderRight(180); //Βάλτε τους δικούς σας παλμούς ανά μέτρο
+Odometer encoderLeft(190), encoderRight(190); //Βάλτε τους δικούς σας παλμούς ανά μέτρο
 Gyroscope gyro(13); //Βάλτε την κατάλληλη τιμή σύμφωνα με το γυροσκόπιό σας
 Car folkracer;
 boolean state1Done = false;
@@ -32,16 +32,34 @@ void loop() {
   unsigned long distance = encoderLeft.getDistance();
   distance = distance + encoderRight.getDistance();
   distance = distance / 2;
-  if (distance > 20) {
-    if (distance < 30) {
+  if (distance > 20) { // Εαν η απόσταση ειναι > 20
+    if (distance < 30) {  // ή η απόσταση ειναι < 30
       if (state1Done == false) {
-        folkracer.stop();
-        folkracer.rotate(180);
-        folkracer.setSpeed(0.5);
+        folkracer.stop(); // το αυτοκινητάκι σταματάει
+        folkracer.rotate(180); // το αυτοκινητάκι περιστέφεται 180 μοίρες
+        folkracer.setSpeed(0.5); // η ταχύτητα του αυτοκινήτου ειναι 0,5
         state1Done = true;
       }
     }
   }
+  folkracer.updateMotors();
+  if (distance > 80) { // Εαν η απόσταση ειναι > 80
+    if (distance < 90) { // ή η απόσταση ειναι < 90
+      if (state1Done == false) {
+        folkracer.stop(); // το αυτοκινητάκι σταματάει
+        folkracer.rotate(90); // το αυτοκινητάκι περιστέφεται 90 μοίρες
+        folkracer.setSpeed(0.5); // η ταχύτητα του αυτοκινήτου ειναι 0,5
+        state1Done = true;
+      }
+    }
+  }
+  folkracer.updateMotors(); 
+  if (distance > 150) { // Εαν η απόσταση ειναι > 150
+    if (state1Done == false) {
+        folkracer.stop(); // το αυτοκινητάκι σταματάει
+        folkracer.setSpeed(0); // η ταχύτητα του αυτοκινήτου ειναι 0
+    }
+  }      
   //TO-DO
   //Όταν το αυτοκινητάκι έχει διανύσει από 80 μέχρι 90 εκατοστά, τότε σταματήστε το και μετά περιστρέψτε το κατά 90 μοίρες
   //στα δεξιά. Στη συνέχεια, θέστε ταχύτητα 0.5 μέτρα το δευτερόλεπτο
