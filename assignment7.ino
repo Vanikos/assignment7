@@ -32,16 +32,23 @@ void loop() {
   unsigned long distance = encoderLeft.getDistance();
   distance = distance + encoderRight.getDistance();
   distance = distance / 2;
-  if (distance > 20) {
-    if (distance < 30) {
-      if (state1Done == false) {
-        folkracer.stop();
-        folkracer.rotate(180);
-        folkracer.setSpeed(0.5);
-        state1Done = true;
-      }
+   if (distance > 20 && distance < 30 && state1Done == false) {  // το αυτοκινητο διανυει > 20 < 30 εκ.
+        folkracer.stop(); //Tο αυτοκίνητο σταματαει
+        folkracer.rotate(180);  // το αυτοκινητο στριβει 180 μοίρες αριστερα
+        folkracer.setSpeed(0.5);  // ταχύτητα αυτοκινητου 0.5
+        state1Done = true; // η πρωτη κατασταση εχει ολοκληρωθει
     }
   }
+  if (distance > 100 && distance < 140 && state2Done == false) {  // το αυτοκινητο διανυει > 80 < 90 εκ.
+    folkracer.stop(); //Tο αυτοκίνητο σταματαει
+    folkracer.rotate(90); // το αυτοκινητο στριβει 90 μοίρες δεξιά
+    folkracer.setSpeed(0.5); // ταχύτητα αυτοκινητου 0.5
+    state2Done = true; // η δευτερη κατασταση εχει ολοκληρωθει
+  }
+  if (distance > 300) { // η αποσταση ειναι μεγαλυτερη απο 150
+    folkracer.stop(); // σταματαμε το αυτοκινητο
+  }
+}
   //TO-DO
   //Όταν το αυτοκινητάκι έχει διανύσει από 80 μέχρι 90 εκατοστά, τότε σταματήστε το και μετά περιστρέψτε το κατά 90 μοίρες
   //στα δεξιά. Στη συνέχεια, θέστε ταχύτητα 0.5 μέτρα το δευτερόλεπτο
